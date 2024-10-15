@@ -1,0 +1,1209 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/L.Control.Layers.Tree.css">
+        <link rel="stylesheet" href="css/qgis2web.css">
+        <link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/L.Control.Layers.Tree.min.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="data/2023_0.js"></script>
+        <script src="data/2022_1.js"></script>
+        <script src="data/2021_2.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:false, maxZoom:28, minZoom:1
+        }).fitBounds([[-24.164075111961377,75.49563629991175],[24.72906411952025,165.57616064601882]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        // remove popup's row if "visible-with-data"
+        function removeEmptyRowsFromPopupContent(content, feature) {
+         var tempDiv = document.createElement('div');
+         tempDiv.innerHTML = content;
+         var rows = tempDiv.querySelectorAll('tr');
+         for (var i = 0; i < rows.length; i++) {
+             var td = rows[i].querySelector('td.visible-with-data');
+             var key = td ? td.id : '';
+             if (td && td.classList.contains('visible-with-data') && feature.properties[key] == null) {
+                 rows[i].parentNode.removeChild(rows[i]);
+             }
+         }
+         return tempDiv.innerHTML;
+        }
+        // add class to format popup if it contains media
+		function addClassToPopupIfMedia(content, popup) {
+			var tempDiv = document.createElement('div');
+			tempDiv.innerHTML = content;
+			if (tempDiv.querySelector('td img')) {
+				popup._contentNode.classList.add('media');
+					// Delay to force the redraw
+					setTimeout(function() {
+						popup.update();
+					}, 10);
+			} else {
+				popup._contentNode.classList.remove('media');
+			}
+		}
+        var zoomControl = L.control.zoom({
+            position: 'topleft'
+        }).addTo(map);
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        function pop_2023_0(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['PROVINSI'] !== null ? autolinker.link(feature.properties['PROVINSI'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['objectif'] !== null ? autolinker.link(feature.properties['objectif'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_2023_0_0(feature) {
+            switch(String(feature.properties['objectif'])) {
+                case '66':
+                    return {
+                pane: 'pane_2023_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(247,251,255,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '73':
+                    return {
+                pane: 'pane_2023_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(237,245,252,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '76':
+                    return {
+                pane: 'pane_2023_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(227,238,249,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '77':
+                    return {
+                pane: 'pane_2023_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(217,232,245,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '79':
+                    return {
+                pane: 'pane_2023_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(207,225,242,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '80':
+                    return {
+                pane: 'pane_2023_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(197,219,239,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '81':
+                    return {
+                pane: 'pane_2023_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(181,212,233,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '82':
+                    return {
+                pane: 'pane_2023_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(165,205,227,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '85':
+                    return {
+                pane: 'pane_2023_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(146,195,222,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '87':
+                    return {
+                pane: 'pane_2023_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(125,184,218,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '88':
+                    return {
+                pane: 'pane_2023_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(105,173,213,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '89':
+                    return {
+                pane: 'pane_2023_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(88,161,207,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '90':
+                    return {
+                pane: 'pane_2023_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(72,150,200,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '92':
+                    return {
+                pane: 'pane_2023_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(57,137,194,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '93':
+                    return {
+                pane: 'pane_2023_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(44,124,187,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '94':
+                    return {
+                pane: 'pane_2023_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(31,110,179,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '96':
+                    return {
+                pane: 'pane_2023_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(20,96,168,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '98':
+                    return {
+                pane: 'pane_2023_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(9,82,157,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '99':
+                    return {
+                pane: 'pane_2023_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(8,65,133,1.0)',
+                interactive: true,
+            }
+                    break;
+                default:
+                    return {
+                pane: 'pane_2023_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(8,48,107,1.0)',
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_2023_0');
+        map.getPane('pane_2023_0').style.zIndex = 400;
+        map.getPane('pane_2023_0').style['mix-blend-mode'] = 'normal';
+        var layer_2023_0 = new L.geoJson(json_2023_0, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_2023_0',
+            layerName: 'layer_2023_0',
+            pane: 'pane_2023_0',
+            onEachFeature: pop_2023_0,
+            style: style_2023_0_0,
+        });
+        bounds_group.addLayer(layer_2023_0);
+        map.addLayer(layer_2023_0);
+        function pop_2022_1(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['PROVINSI'] !== null ? autolinker.link(feature.properties['PROVINSI'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['objectif'] !== null ? autolinker.link(feature.properties['objectif'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_2022_1_0(feature) {
+            switch(String(feature.properties['objectif'])) {
+                case '65':
+                    return {
+                pane: 'pane_2022_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(3,5,26,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '73':
+                    return {
+                pane: 'pane_2022_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(19,13,37,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '76':
+                    return {
+                pane: 'pane_2022_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(36,20,50,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '77':
+                    return {
+                pane: 'pane_2022_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(54,25,63,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '78':
+                    return {
+                pane: 'pane_2022_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(73,29,73,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '79':
+                    return {
+                pane: 'pane_2022_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(92,30,81,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '80':
+                    return {
+                pane: 'pane_2022_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(112,31,87,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '81':
+                    return {
+                pane: 'pane_2022_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(133,30,90,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '85':
+                    return {
+                pane: 'pane_2022_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(153,27,91,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '86':
+                    return {
+                pane: 'pane_2022_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(174,23,89,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '87':
+                    return {
+                pane: 'pane_2022_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(194,23,83,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '88':
+                    return {
+                pane: 'pane_2022_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(211,33,75,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '89':
+                    return {
+                pane: 'pane_2022_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(225,51,66,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '91':
+                    return {
+                pane: 'pane_2022_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(235,73,62,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '92':
+                    return {
+                pane: 'pane_2022_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(241,97,68,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '93':
+                    return {
+                pane: 'pane_2022_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(243,120,82,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '94':
+                    return {
+                pane: 'pane_2022_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(245,141,100,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '95':
+                    return {
+                pane: 'pane_2022_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(246,161,120,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '96':
+                    return {
+                pane: 'pane_2022_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(246,181,144,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '97':
+                    return {
+                pane: 'pane_2022_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(247,200,169,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '98':
+                    return {
+                pane: 'pane_2022_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(248,218,197,1.0)',
+                interactive: true,
+            }
+                    break;
+                default:
+                    return {
+                pane: 'pane_2022_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(250,235,221,1.0)',
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_2022_1');
+        map.getPane('pane_2022_1').style.zIndex = 401;
+        map.getPane('pane_2022_1').style['mix-blend-mode'] = 'normal';
+        var layer_2022_1 = new L.geoJson(json_2022_1, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_2022_1',
+            layerName: 'layer_2022_1',
+            pane: 'pane_2022_1',
+            onEachFeature: pop_2022_1,
+            style: style_2022_1_0,
+        });
+        bounds_group.addLayer(layer_2022_1);
+        map.addLayer(layer_2022_1);
+        function pop_2021_2(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['PROVINSI'] !== null ? autolinker.link(feature.properties['PROVINSI'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['objectif'] !== null ? autolinker.link(feature.properties['objectif'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_2021_2_0(feature) {
+            switch(String(feature.properties['objectif'])) {
+                default:
+                    return {
+                pane: 'pane_2021_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(208,28,139,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '64':
+                    return {
+                pane: 'pane_2021_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(214,57,154,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '67':
+                    return {
+                pane: 'pane_2021_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(221,87,169,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '73':
+                    return {
+                pane: 'pane_2021_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(227,116,184,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '76':
+                    return {
+                pane: 'pane_2021_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(233,145,199,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '77':
+                    return {
+                pane: 'pane_2021_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(239,175,214,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '79':
+                    return {
+                pane: 'pane_2021_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(242,191,222,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '80':
+                    return {
+                pane: 'pane_2021_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(243,204,228,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '81':
+                    return {
+                pane: 'pane_2021_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(244,216,233,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '83':
+                    return {
+                pane: 'pane_2021_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(245,228,239,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '84':
+                    return {
+                pane: 'pane_2021_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(246,241,244,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '85':
+                    return {
+                pane: 'pane_2021_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(241,245,236,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '86':
+                    return {
+                pane: 'pane_2021_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(229,241,215,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '88':
+                    return {
+                pane: 'pane_2021_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(217,237,193,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '89':
+                    return {
+                pane: 'pane_2021_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(205,232,172,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '90':
+                    return {
+                pane: 'pane_2021_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(193,228,150,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '91':
+                    return {
+                pane: 'pane_2021_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(179,222,129,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '93':
+                    return {
+                pane: 'pane_2021_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(159,212,111,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '94':
+                    return {
+                pane: 'pane_2021_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(138,202,93,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '95':
+                    return {
+                pane: 'pane_2021_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(118,192,75,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '97':
+                    return {
+                pane: 'pane_2021_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(97,182,56,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '99':
+                    return {
+                pane: 'pane_2021_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(77,172,38,1.0)',
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_2021_2');
+        map.getPane('pane_2021_2').style.zIndex = 402;
+        map.getPane('pane_2021_2').style['mix-blend-mode'] = 'normal';
+        var layer_2021_2 = new L.geoJson(json_2021_2, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_2021_2',
+            layerName: 'layer_2021_2',
+            pane: 'pane_2021_2',
+            onEachFeature: pop_2021_2,
+            style: style_2021_2_0,
+        });
+        bounds_group.addLayer(layer_2021_2);
+        map.addLayer(layer_2021_2);
+        var baseMaps = {};
+        var overlaysTree = [
+            {label: '2021<br /><table><tr><td style="text-align: center;"><img src="legend/2021_2_0.png" /></td><td></td></tr><tr><td style="text-align: center;"><img src="legend/2021_2_641.png" /></td><td>64</td></tr><tr><td style="text-align: center;"><img src="legend/2021_2_672.png" /></td><td>67</td></tr><tr><td style="text-align: center;"><img src="legend/2021_2_733.png" /></td><td>73</td></tr><tr><td style="text-align: center;"><img src="legend/2021_2_764.png" /></td><td>76</td></tr><tr><td style="text-align: center;"><img src="legend/2021_2_775.png" /></td><td>77</td></tr><tr><td style="text-align: center;"><img src="legend/2021_2_796.png" /></td><td>79</td></tr><tr><td style="text-align: center;"><img src="legend/2021_2_807.png" /></td><td>80</td></tr><tr><td style="text-align: center;"><img src="legend/2021_2_818.png" /></td><td>81</td></tr><tr><td style="text-align: center;"><img src="legend/2021_2_839.png" /></td><td>83</td></tr><tr><td style="text-align: center;"><img src="legend/2021_2_8410.png" /></td><td>84</td></tr><tr><td style="text-align: center;"><img src="legend/2021_2_8511.png" /></td><td>85</td></tr><tr><td style="text-align: center;"><img src="legend/2021_2_8612.png" /></td><td>86</td></tr><tr><td style="text-align: center;"><img src="legend/2021_2_8813.png" /></td><td>88</td></tr><tr><td style="text-align: center;"><img src="legend/2021_2_8914.png" /></td><td>89</td></tr><tr><td style="text-align: center;"><img src="legend/2021_2_9015.png" /></td><td>90</td></tr><tr><td style="text-align: center;"><img src="legend/2021_2_9116.png" /></td><td>91</td></tr><tr><td style="text-align: center;"><img src="legend/2021_2_9317.png" /></td><td>93</td></tr><tr><td style="text-align: center;"><img src="legend/2021_2_9418.png" /></td><td>94</td></tr><tr><td style="text-align: center;"><img src="legend/2021_2_9519.png" /></td><td>95</td></tr><tr><td style="text-align: center;"><img src="legend/2021_2_9720.png" /></td><td>97</td></tr><tr><td style="text-align: center;"><img src="legend/2021_2_9921.png" /></td><td>99</td></tr></table>', layer: layer_2021_2},
+            {label: '2022<br /><table><tr><td style="text-align: center;"><img src="legend/2022_1_650.png" /></td><td>65</td></tr><tr><td style="text-align: center;"><img src="legend/2022_1_731.png" /></td><td>73</td></tr><tr><td style="text-align: center;"><img src="legend/2022_1_762.png" /></td><td>76</td></tr><tr><td style="text-align: center;"><img src="legend/2022_1_773.png" /></td><td>77</td></tr><tr><td style="text-align: center;"><img src="legend/2022_1_784.png" /></td><td>78</td></tr><tr><td style="text-align: center;"><img src="legend/2022_1_795.png" /></td><td>79</td></tr><tr><td style="text-align: center;"><img src="legend/2022_1_806.png" /></td><td>80</td></tr><tr><td style="text-align: center;"><img src="legend/2022_1_817.png" /></td><td>81</td></tr><tr><td style="text-align: center;"><img src="legend/2022_1_858.png" /></td><td>85</td></tr><tr><td style="text-align: center;"><img src="legend/2022_1_869.png" /></td><td>86</td></tr><tr><td style="text-align: center;"><img src="legend/2022_1_8710.png" /></td><td>87</td></tr><tr><td style="text-align: center;"><img src="legend/2022_1_8811.png" /></td><td>88</td></tr><tr><td style="text-align: center;"><img src="legend/2022_1_8912.png" /></td><td>89</td></tr><tr><td style="text-align: center;"><img src="legend/2022_1_9113.png" /></td><td>91</td></tr><tr><td style="text-align: center;"><img src="legend/2022_1_9214.png" /></td><td>92</td></tr><tr><td style="text-align: center;"><img src="legend/2022_1_9315.png" /></td><td>93</td></tr><tr><td style="text-align: center;"><img src="legend/2022_1_9416.png" /></td><td>94</td></tr><tr><td style="text-align: center;"><img src="legend/2022_1_9517.png" /></td><td>95</td></tr><tr><td style="text-align: center;"><img src="legend/2022_1_9618.png" /></td><td>96</td></tr><tr><td style="text-align: center;"><img src="legend/2022_1_9719.png" /></td><td>97</td></tr><tr><td style="text-align: center;"><img src="legend/2022_1_9820.png" /></td><td>98</td></tr><tr><td style="text-align: center;"><img src="legend/2022_1_21.png" /></td><td></td></tr></table>', layer: layer_2022_1},
+            {label: '2023<br /><table><tr><td style="text-align: center;"><img src="legend/2023_0_660.png" /></td><td>66</td></tr><tr><td style="text-align: center;"><img src="legend/2023_0_731.png" /></td><td>73</td></tr><tr><td style="text-align: center;"><img src="legend/2023_0_762.png" /></td><td>76</td></tr><tr><td style="text-align: center;"><img src="legend/2023_0_773.png" /></td><td>77</td></tr><tr><td style="text-align: center;"><img src="legend/2023_0_794.png" /></td><td>79</td></tr><tr><td style="text-align: center;"><img src="legend/2023_0_805.png" /></td><td>80</td></tr><tr><td style="text-align: center;"><img src="legend/2023_0_816.png" /></td><td>81</td></tr><tr><td style="text-align: center;"><img src="legend/2023_0_827.png" /></td><td>82</td></tr><tr><td style="text-align: center;"><img src="legend/2023_0_858.png" /></td><td>85</td></tr><tr><td style="text-align: center;"><img src="legend/2023_0_879.png" /></td><td>87</td></tr><tr><td style="text-align: center;"><img src="legend/2023_0_8810.png" /></td><td>88</td></tr><tr><td style="text-align: center;"><img src="legend/2023_0_8911.png" /></td><td>89</td></tr><tr><td style="text-align: center;"><img src="legend/2023_0_9012.png" /></td><td>90</td></tr><tr><td style="text-align: center;"><img src="legend/2023_0_9213.png" /></td><td>92</td></tr><tr><td style="text-align: center;"><img src="legend/2023_0_9314.png" /></td><td>93</td></tr><tr><td style="text-align: center;"><img src="legend/2023_0_9415.png" /></td><td>94</td></tr><tr><td style="text-align: center;"><img src="legend/2023_0_9616.png" /></td><td>96</td></tr><tr><td style="text-align: center;"><img src="legend/2023_0_9817.png" /></td><td>98</td></tr><tr><td style="text-align: center;"><img src="legend/2023_0_9918.png" /></td><td>99</td></tr><tr><td style="text-align: center;"><img src="legend/2023_0_19.png" /></td><td></td></tr></table>', layer: layer_2023_0},]
+        var lay = L.control.layers.tree(null, overlaysTree,{
+            //namedToggle: true,
+            //selectorBack: false,
+            //closedSymbol: '&#8862; &#x1f5c0;',
+            //openedSymbol: '&#8863; &#x1f5c1;',
+            //collapseAll: 'Collapse all',
+            //expandAll: 'Expand all',
+            collapsed: true,
+        });
+        lay.addTo(map);
+        setBounds();
+        var i = 0;
+        layer_2023_0.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['PROVINSI'] !== null?String('<div style="color: #323232; font-size: 10pt; font-family: \'Open Sans\', sans-serif;">' + layer.feature.properties['PROVINSI']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_2023_0'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
+        var i = 0;
+        layer_2022_1.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['PROVINSI'] !== null?String('<div style="color: #323232; font-size: 10pt; font-family: \'Open Sans\', sans-serif;">' + layer.feature.properties['PROVINSI']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_2022_1'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
+        var i = 0;
+        layer_2021_2.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['PROVINSI'] !== null?String('<div style="color: #323232; font-size: 10pt; font-family: \'Open Sans\', sans-serif;">' + layer.feature.properties['PROVINSI']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_2021_2'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
+        resetLabels([layer_2023_0,layer_2022_1,layer_2021_2]);
+        map.on("zoomend", function(){
+            resetLabels([layer_2023_0,layer_2022_1,layer_2021_2]);
+        });
+        map.on("layeradd", function(){
+            resetLabels([layer_2023_0,layer_2022_1,layer_2021_2]);
+        });
+        map.on("layerremove", function(){
+            resetLabels([layer_2023_0,layer_2022_1,layer_2021_2]);
+        });
+        </script>
+    </body>
+</html>
